@@ -61,9 +61,12 @@ class RMSNorm(nn.Module):
         self.eps = eps
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # TODO: x / sqrt(mean(x^2) + eps) * weight
-        # Hint: HF computes the normalization in float32, then casts back.
-        raise NotImplementedError
+        # mean square 
+        mean_square = (x*x).mean(dim=-1, keepdim=True)
+        mean_square += self.eps
+        inv_rms = mean_square.rsqrt()
+        result = (x*inv_rms)*self.weight
+        return result
 
 
 def apply_rope(x: torch.Tensor, positions: torch.Tensor, theta: float) -> torch.Tensor:
