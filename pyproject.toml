@@ -1,0 +1,17 @@
+[project]
+name = "miniinfer"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "transformers>=4.51",   # first release with Qwen3 support
+    "safetensors",
+    "huggingface_hub",
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["miniinfer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
